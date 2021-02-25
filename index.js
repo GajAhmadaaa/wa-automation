@@ -5,8 +5,8 @@ const fs = require("fs");
 const express = require("express");
 const axios = require("axios").default;
 
-const helpOnInPM = ["hello", "hi", "hii", "hey", "heyy", "#help", "#menu"];
-const helpOnInGroup = ["#help", "#menu"];
+const helpOnInPM = ["hello", "hi", "hii", "hey", "heyy", "!help", "!menu"];
+const helpOnInGroup = ["!help", "!menu"];
 
 const helpText =
   process.env.HELP_TEXT ||
@@ -31,7 +31,7 @@ Made by: pathetic_geek (https://github.com/patheticGeek)
 
 const leaveText =
   process.env.LEAVE_TEXT ||
-  "Ab unko humshe rishta nhi rakhna hai\nto humari taraf se bhi koi zabardasti nhi hai";
+  "Kamu adalah admin! tapi saya gamau keluar, hehe";
 
 const server = express();
 const PORT = parseInt(process.env.PORT) || 3000;
@@ -123,16 +123,15 @@ async function procMess(message) {
       );
       if (user && user.isAdmin) {
         await cl.sendText(message.chatId, leaveText);
-        await cl.leaveGroup(message.chat.id);
       } else {
-        await cl.reply(message.chatId, "You're not an admin!", message.id);
+        await cl.reply(message.chatId, "Kamu bukan admin!", message.id);
       }
     }
   } else if (
     ["image", "video"].includes(message.type) &&
     message.caption === "#sticker"
   ) {
-    await cl.sendText(message.chatId, "Processing sticker");
+    await cl.sendText(message.chatId, "Sabar stikernya lagi dibikin");
     const mediaData = await decryptMedia(message);
     const dataUrl = `data:${message.mimetype};base64,${mediaData.toString(
       "base64"
